@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Gridiron Football League</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fff;
+            color: #000;
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #000;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tab {
+            padding: 8px 20px; /* Thinner tabs */
+            background: #000;
+            color: #fff;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .tab:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+        .sub-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            background: #e0e0e0;
+        }
+
+        .sub-tab {
+            padding: 8px 20px;
+            background: #000;
+            color: #fff;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sub-tab:hover {
+            background: #333;
+        }
+
+        .content {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .leaderboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        .stats-table th {
+            background: #000;
+            color: #fff;
+        }
+
+        .stats-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease forwards;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .popup.fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        .popup button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ticker {
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .ticker span {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>National Gridiron Football League</h1>
+    </header>
+
+    <div class="tabs">
+        <div class="tab" onclick="showSection('home')">Home</div>
+        <div class="tab" onclick="showSection('statistics')">Statistics</div>
+        <div class="tab" onclick="showSection('rankings')">Rankings</div>
+        <div class="tab" onclick="showSection('schedule')">Schedule</div>
+        <div class="tab" onclick="showSection('news')">News</div>
+        <div class="tab" onclick="showSection('support')">Support</div>
+    </div>
+
+    <div class="content">
+        <div id="home">
+            <div class="ticker">
+                <span>Latest News: Season has just started! | Next Game: March 30th, TBD | Join our Discord community!</span>
+            </div>
+            <h2 style="text-align: center; margin-bottom: 20px;">Top Performers</h2>
+            <div class="leaderboard">
+                <div class="stat-card">
+                    <h3>Passing Yards</h3>
+                    <p>1. Test - 4,523 yds</p>
+                    <p>2. Test2 - 4,312 yds</p>
+                    <p>3. Test3 - 4,189 yds</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Touchdowns</h3>
+                    <p>1. Test1 - 42 TDs</p>
+                    <p>2. Test2 - 39 TDs</p>
+                    <p>3. Test3 - 37 TDs</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Interceptions (DB)</h3>
+                    <p>1. Test4 - 12 INTs</p>
+                    <p>2. Test5 - 10 INTs</p>
+                    <p>3. Test6 - 9 INTs</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="statistics" style="display: none;">
+            <h2 style="text-align: center; margin-bottom: 20px;">Player Statistics</h2>
+            <div class="sub-tabs">
+                <div class="sub-tab" onclick="showSubSection('qb')">Quarterback</div>
+                <div class="sub-tab" onclick="showSubSection('wr')">Receiver</div>
+                <div class="sub-tab" onclick="showSubSection('mlb')">MLB</div>
+                <div class="sub-tab" onclick="showSubSection('db')">DB</div>
+            </div>
+
+            <div id="qb" style="display: block;">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>G</th>
+                            <th>Comp</th>
+                            <th>Att</th>
+                            <th>Comp%</th>
+                            <th>Yds</th>
+                            <th>TD</th>
+                            <th>INT</th>
+                            <th>Rate</th>
+                            <th>Sack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>GridironKing</td><td>16</td><td>350</td><td>512</td><td>68.4</td><td>4523</td><td>38</td><td>12</td><td>108.5</td><td>25</td></tr>
+                        <tr><td>BlazeQB</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ThunderArm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SkySlinger</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>PassWizard</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RocketRon</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>AirStrike</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>QBShark</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SpinMaster</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>EagleEye</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>JetPass</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>FireArm</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BulletBill</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SonicQB</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>LaserLuke</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>StormThrow</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>HawkEye</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RifleRick</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BlitzQB</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CanonJoe</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>FlashFinn</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="wr" style="display: none;">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>G</th>
+                            <th>Rec</th>
+                            <th>Yds</th>
+                            <th>Avg</th>
+                            <th>TD</th>
+                            <th>Lng</th>
+                            <th>YAC</th>
+                            <th>Drops</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>CatchKing</td><td>16</td><td>98</td><td>1456</td><td>14.9</td><td>15</td><td>82</td><td>523</td><td>3</td></tr>
+                        <tr><td>SpeedySam</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RouteRunner</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>DeepThreat</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>HandsOfGold</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>JumpJack</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SlantStar</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>WRBeast</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>AgileAce</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RedzoneRuler</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>FlyFreak</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CutMaster</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>GrabGuru</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SwiftSid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>EndzoneElf</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>StretchSteve</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>GloveGod</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>AirAssassin</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RaceRay</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CatchCzar</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ZoomZach</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="mlb" style="display: none;">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>G</th>
+                            <th>Tkl</th>
+                            <th>Solo</th>
+                            <th>Ast</th>
+                            <th>Sack</th>
+                            <th>TFL</th>
+                            <th>INT</th>
+                            <th>PD</th>
+                            <th>FF</th>
+                            <th>FR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>TackleBeast</td><td>16</td><td>145</td><td>92</td><td>53</td><td>8</td><td>12</td><td>3</td><td>7</td><td>2</td><td>1</td></tr>
+                        <tr><td>HitmanHal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BlitzBoss</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RunStopper</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>WallWill</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SackSavage</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ToughTroy</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>MidMonster</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CrashCam</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>LineLord</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BoneBreaker</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>GapGuru</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SmashSean</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>RushRuin</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>TackleTitan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ForceFinn</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>HardHitter</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>PlayPlug</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>DefendDan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>StopperStan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BrickBrad</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="db" style="display: none;">
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>G</th>
+                            <th>Tkl</th>
+                            <th>Solo</th>
+                            <th>Ast</th>
+                            <th>INT</th>
+                            <th>Yds</th>
+                            <th>TD</th>
+                            <th>PD</th>
+                            <th>FF</th>
+                            <th>FR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>PickSixGod</td><td>16</td><td>85</td><td>62</td><td>23</td><td>12</td><td>156</td><td>2</td><td>18</td><td>1</td><td>0</td></tr>
+                        <tr><td>LockdownLee</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BallHawkBen</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CoverKing</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ShadowShane</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>INTIce</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>PassPatrol</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ZoneZack</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SafetySam</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CornerCrush</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>DeflectDon</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>PickPete</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>ShutoutSid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>TakedownTom</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>GuardGuru</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BackfieldBane</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>SwatSteve</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>JamJake</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>CoverCat</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>InterceptIan</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>BlanketBob</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="support" style="display: none;">
+            <h2 style="text-align: center; margin-bottom: 20px;">Support</h2>
+            <div class="stat-card">
+                <h3>Contact Us</h3>
+                <p>General Inquiries: <a href="mailto:info@ngfl.com">info@ngfl.com</a></p>
+                <p>Technical Support: <a href="mailto:support@ngfl.com">support@ngfl.com</a></p>
+                <p>Player Relations: <a href="mailto:players@ngfl.com">players@ngfl.com</a></p>
+                <p>Discord: <a href="https://discord.gg/42xZqKjSVu">Join our community</a></p>
+            </div>
+        </div>
+
+        <div id="rankings" style="display: none;"></div>
+        <div id="schedule" style="display: none;"></div>
+        <div id="news" style="display: none;"></div>
+    </div>
+
+    <div class="popup" id="discordPopup">
+        Corii has invited you to <a href="https://discord.gg/42xZqKjSVu">https://discord.gg/42xZqKjSVu</a>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = ['home', 'statistics', 'rankings', 'schedule', 'news', 'support'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    section.style.display = id === sectionId ? 'block' : 'none';
+                }
+            });
+        }
+
+        function showSubSection(subSectionId) {
+            const subSections = ['qb', 'wr', 'mlb', 'db'];
+            subSections.forEach(id => {
+                const subSection = document.getElementById(id);
+                if (subSection) {
+                    subSection.style.display = id === subSectionId ? 'block' : 'none';
+                }
+            });
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('discordPopup');
+            popup.classList.add('fade-out');
+            setTimeout(() => {
+                popup.style.display = 'none';
+                popup.classList.remove('fade-out');
+            }, 500); // Match animation duration
+        }
+
+        setTimeout(() => {
+            const popup = document.getElementById('discordPopup');
+            if (popup.style.display !== 'none') {
+                popup.classList.add('fade-out');
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                    popup.classList.remove('fade-out');
+                }, 500);
+            }
+        }, 15000);
+    </script>
+</body>
+</html>
